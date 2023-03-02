@@ -71,7 +71,7 @@ var initGame = function (turn) {
         inputField[index].value = '';
     }
 };
-initGame(4);
+initGame();
 var compareArrays = function (a, b) {
     return JSON.stringify(a) === JSON.stringify(b);
 };

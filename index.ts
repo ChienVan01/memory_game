@@ -92,7 +92,7 @@ const initGame = (turn: number = 1 || undefined) => {
     inputField[index]!.value = '';
   }
 };
-initGame(4);
+initGame();
 
 const compareArrays = (a, b) => {
   return JSON.stringify(a) === JSON.stringify(b);
