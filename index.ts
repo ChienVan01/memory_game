@@ -7,6 +7,7 @@ const wordText = document.querySelector('.word'),
   checkBtn = document.querySelector('.check-word');
 
 let correctWord: Array<number>, timer;
+let version: number = 10; //phiên bản 1 = 5, phiên bản 2 = 10
 
 const initTimer = (maxTime) => {
   clearInterval(timer);
@@ -19,47 +20,29 @@ const initTimer = (maxTime) => {
 };
 
 const initGame = (turn: number = 1 || undefined) => {
-  (levelText as HTMLInputElement).innerText = `${turn} - 5`;
-
+  (levelText as HTMLInputElement).innerText = `${turn} - ${version}`;
+  
   initTimer(turn);
 
   let randomObj: Array<number> = [];
 
-  if (turn === 1) {
-    for (let i = 0; i < 5; i++) {
-      let numRand = Math.floor(Math.random() * (9 - 0 + 1)) + 0;
+  let maxNumber: number = 9;
+  let minNumber: number = 0;
+  let min: number = 1;
+  for (let i = 0; i < turn - 1; i++) {
+    maxNumber = parseInt(`${maxNumber}9`);
 
-      randomObj.push(numRand);
+    if (turn > 1) {
+      minNumber = min = parseInt(`${min}0`);
     }
   }
-  if (turn === 2) {
-    for (let i = 0; i < 5; i++) {
-      let numRand = Math.floor(Math.random() * (99 - 10 + 1)) + 10;
 
-      randomObj.push(numRand);
-    }
-  }
-  if (turn === 3) {
-    for (let i = 0; i < 5; i++) {
-      let numRand = Math.floor(Math.random() * (999 - 100 + 1)) + 100;
+  for (let i = 0; i < 5; i++) {
+    let numRand = Math.floor(Math.random() * (maxNumber - minNumber + 1)) + minNumber;
 
-      randomObj.push(numRand);
-    }
+    randomObj.push(numRand);
   }
-  if (turn === 4) {
-    for (let i = 0; i < 5; i++) {
-      let numRand = Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000;
 
-      randomObj.push(numRand);
-    }
-  }
-  if (turn === 5) {
-    for (let i = 0; i < 5; i++) {
-      let numRand = Math.floor(Math.random() * (99999 - 10000 + 1)) + 10000;
-
-      randomObj.push(numRand);
-    }
-  }
   console.log('randomObj', randomObj);
 
   const timeOut = turn * 1000;
@@ -108,8 +91,6 @@ const checkWord = () => {
     userNumber.push(parseInt(element));
   }
 
-  console.log('userNumber', userNumber);
-
   if (!userNumber) return alert('Please enter the word to check!');
 
   if (!compareArrays(userNumber, correctWord))
@@ -117,7 +98,7 @@ const checkWord = () => {
 
   if (
     compareArrays(userNumber, correctWord) &&
-    parseInt((levelText as HTMLInputElement).innerText + 1) === 5
+    parseInt((levelText as HTMLInputElement).innerText + 1) === version
   ) {
     alert(`You have a super memory`);
     initGame();
